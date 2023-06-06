@@ -126,7 +126,21 @@ test_image_gen.classes
 predictions = pred_probabilities > 0.5
 print(classification_report(test_image_gen.classes,predictions))
 confusion_matrix(test_image_gen.classes,predictions)
-
+import random
+import tensorflow as tf
+list_dir=["uninfected","parasitized"]
+dir_=(random.choice(list_dir))
+para_img= imread(train_path+
+                 '/'+dir_+'/'+
+                 os.listdir(train_path+'/'+dir_)[random.randint(0,100)])
+img  = tf.convert_to_tensor(np.asarray(para_img))
+img = tf.image.resize(img,(130,130))
+img=img.numpy()
+pred=bool(model.predict(img.reshape(1,130,130,3))<0.5 )
+plt.title("Model prediction: "+("Parasitized" if pred  else "Uninfected")+"\nActual Value: "+str(dir_))
+plt.axis("off")
+plt.imshow(img)
+plt.show()
 
 
 
@@ -135,21 +149,26 @@ confusion_matrix(test_image_gen.classes,predictions)
 ## OUTPUT
 
 ### Training Loss, Validation Loss Vs Iteration Plot
-![02](https://github.com/charumathiramesh/malaria-cell-recognition/assets/120204455/9ca3ca3a-8041-40d7-a208-40b0eb8f598b)
 
+![download](https://github.com/charumathiramesh/malaria-cell-recognition/assets/120204455/fdc2badc-93dc-4472-a146-f09016b3f721)
 
 
 ### Classification Report
+![01](https://github.com/charumathiramesh/malaria-cell-recognition/assets/120204455/0a78595a-bfc9-400e-a766-57f774385d2f)
 
-![01](https://github.com/charumathiramesh/malaria-cell-recognition/assets/120204455/ffe2c82e-2626-40cb-a339-85ab1207dc3b)
+
 
 
 ### Confusion Matrix
 
+![03](https://github.com/charumathiramesh/malaria-cell-recognition/assets/120204455/c4abff0b-ee79-48f8-8f3e-d9568490c078)
 
-![03](https://github.com/charumathiramesh/malaria-cell-recognition/assets/120204455/bac10079-1e88-4d11-a8b0-58eb6f301d13)
+
 
 ### New Sample Data Prediction
+
+
+![download](https://github.com/charumathiramesh/malaria-cell-recognition/assets/120204455/0025567c-9d58-4442-8a19-8021cb90d329)
 
 
 
